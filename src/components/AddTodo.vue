@@ -1,32 +1,27 @@
 <template>
-  <validation-observer
-      ref="observer"
-      v-slot="{ invalid }"
-  >
-    <v-form @submit.prevent="submit" class="mb-4">
+  <validation-observer ref="observer">
+    <v-form @submit.prevent="submit($refs.observer)" class="mb-4">
       <v-container>
         <v-row justify="center">
-          <v-col
-              cols="12"
-              md="6"
-          >
+          <v-col cols="12" md="6">
             <validation-provider
                 v-slot="{ errors }"
                 name="Название"
                 rules="required"
             >
               <v-text-field
-                  v-model.trim="title"
+                  v-model="localTitle"
                   :error-messages="errors"
                   label="Название"
                   required
+                  @input="setTitle"
               ></v-text-field>
             </validation-provider>
             <v-btn
                 class="mt-3"
                 block
+                color="primary"
                 type="submit"
-                :disabled="invalid"
             >
               Добавить
             </v-btn>
@@ -38,10 +33,13 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
+const { mapState, mapActions, mapMutations } = createNamespacedHelpers('todos');
+
 import { required } from 'vee-validate/dist/rules'
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
 
-setInteractionMode('aggressive')
+setInteractionMode('passive')
 
 extend('required', {
   ...required,
@@ -50,20 +48,29 @@ extend('required', {
 
 export default {
   name: "AddTodo",
-  data: () => ({
-    valid: false,
-    title: ''
-  }),
-  methods: {
-    submit () {
-      const todo = {
-        id: Date.now(),
-        title: this.title,
-        completed: false
+
+  computed: {
+    ...mapState([
+        'title'
+    ]),
+    localTitle: {
+      get() {
+        return this.title;
+      },
+      set(title) {
+        console.log(title)
+        this.setTitle(title);
       }
-      this.$emit('add', todo)
-      this.$refs.observer.validate()
     }
+  },
+
+  methods: {
+    ...mapActions([
+      'submit'
+    ]),
+    ...mapMutations([
+        'setTitle'
+    ]),
   },
   components: {
     ValidationProvider,
