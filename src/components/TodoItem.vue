@@ -1,5 +1,8 @@
 <template>
-  <v-list-item :value="todo.id">
+  <v-list-item
+	:value="todo.id"
+	@input="todo.completed = $event"
+  >
     <template v-slot:default>
       <v-row justify="space-between" align="center">
         <v-col
