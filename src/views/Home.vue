@@ -6,7 +6,7 @@
 		md="6"
 		class="d-flex align-center justify-center"
       >
-		<img alt="Vue logo" width="200" height="200" src="../assets/logo.svg">
+		<img class="mt-15" alt="Vue logo" width="200" height="200" src="../assets/logo.svg">
       </v-col>
     </v-row>
   </v-container>
