@@ -1,8 +1,10 @@
 <template>
   <div id="app">
+	<h1>Todo application</h1>
+	<hr />
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/todos">Todos</router-link>
     </div>
     <router-view/>
   </div>
@@ -30,3 +32,10 @@
   color: #42b983;
 }
 </style>
+<script>
+export default {
+  components: {
+  
+  }
+}
+</script>
