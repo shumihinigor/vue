@@ -1,14 +1,12 @@
 <template>
   <v-container>
-    <v-row justify="center">
+    <v-row justify="center" align="center">
       <v-col
-          cols="12"
-          md="6"
+		cols="12"
+		md="6"
+		class="d-flex align-center justify-center"
       >
-        <div
-            class="my-4"
-            v-text="'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci, assumenda consequatur eius eligendi expedita iste libero magni maxime nihil provident, tempora, unde voluptates! Aspernatur at consectetur iste quae veritatis?'"
-        />
+		<img alt="Vue logo" width="200" height="200" src="../assets/logo.svg">
       </v-col>
     </v-row>
   </v-container>

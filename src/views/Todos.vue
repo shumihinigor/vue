@@ -63,7 +63,6 @@ export default {
     ...mapActions([
       'getTodos',
       'deleteTodo',
-      'addTodo',
       'changeFilter'
     ])
   },

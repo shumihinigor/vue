@@ -66,10 +66,6 @@ const actions = {
         commit('spliceTodos', index)
     },
 
-    addTodo({ commit }, todo) {
-        commit('pushTodos', todo)
-    },
-
     submit({ state, commit }, observer) {
         observer.validate().then(result => {
             if (!result) return
