@@ -1,7 +1,4 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-
-Vue.use(VueRouter)
+import { createRouter as _createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
@@ -16,10 +13,9 @@ const routes = [
   }
 ]
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
-})
-
-export default router
+export const createRouter = () => {
+  return _createRouter({
+    history: createWebHistory(process.env.BASE_URL),
+    routes: routes
+  })
+}

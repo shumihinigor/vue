@@ -9,7 +9,7 @@
 			>
 			<label :for="todo.id">
 				<strong>{{ index }}</strong>
-				{{ todo.title | capitalFirstLetter }}
+				{{ capitalFirstLetter(todo.title) }}
 			</label>
 		</span>
 		<button @click="deleteTodo">&times;</button>
@@ -18,7 +18,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-const {  mapActions } = createNamespacedHelpers('todos');
+const { mapActions } = createNamespacedHelpers('todos');
 
 export default {
 	name: "TodoItem",
@@ -32,15 +32,13 @@ export default {
 			default: () => 0
 		}
 	},
-	filters: {
-		capitalFirstLetter(value) {
-			return value[0].toUpperCase() + value.slice(1, value.length)
-		}
-	},
 	methods: {
 		...mapActions([
 			'deleteTodo'
-		])
+		]),
+		capitalFirstLetter(value) {
+			return value[0].toUpperCase() + value.slice(1, value.length)
+		}
 	}
 }
 </script>

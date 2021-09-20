@@ -1,19 +1,20 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { createStore as _createStore } from 'vuex'
 
 // modules
 import todos from './modules/todos'
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-    todos
-  }
-})
+// Create a new store instance.
+export const createStore = () => {
+  return _createStore({
+    state() {
+      return {}
+    },
+    mutations: {
+    },
+    actions: {
+    },
+    modules: {
+      todos
+    }
+  })
+}
