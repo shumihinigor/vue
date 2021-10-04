@@ -1,4 +1,4 @@
-# Template
+# Vue 3
 
 ## Project setup
 ```
