@@ -3,7 +3,7 @@
 		<select
 			id="select"
 			name="select"
-			v-model="localFilter"
+			v-model="filter"
 		>
 			<option
 				v-for="option in filterItems"
@@ -25,46 +25,49 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
-const { mapGetters, mapActions, mapState, mapMutations} = createNamespacedHelpers('todos');
+import { computed, onMounted } from 'vue'
+import { useStore } from 'vuex';
+
 import TodoList from '@/components/TodoList'
 import AddTodo from '@/components/AddTodo'
 
 export default {
 	name: 'Todos',
-	computed: {
-		...mapState([
-			'filter'
-		]),
-		localFilter: {
-			get() {
-				return this.filter;
-			},
-			set(filter) {
-				this.setFilter(filter);
-			}
-		},
-		...mapGetters([
-			'todos',
-			'loading',
-			'filterItems',
-			'filteredTodos'
-		])
-	},
-	methods: {
-		...mapActions([
-			'getTodos'
-		]),
-		...mapMutations([
-			'setFilter'
-		])
-	},
-	mounted() {
-		if (this.todos.length) return
-		this.getTodos();
-	},
-	components: {
-		TodoList, AddTodo
+	components: { TodoList, AddTodo },
+	setup() {
+		const store = useStore()
+
+		// access a state in computed function
+		const filter = computed({
+			get: () => store.getters['todos/filter'],
+			set: filter => setFilter(filter)
+		});
+
+		// access a getter in computed function
+		const todos = computed(() => store.getters['todos/todos']);
+		const loading = computed(() => store.getters['todos/loading']);
+		const filterItems = computed(() => store.getters['todos/filterItems']);
+		const filteredTodos = computed(() => store.getters['todos/filteredTodos']);
+
+		// access a mutation
+		const setFilter = (filter) => store.commit('todos/setFilter', filter);
+
+		// access an action
+		const getTodos = () => store.dispatch('todos/getTodos');
+
+		// mounted
+		onMounted(() => {
+			if (todos.value.length) return
+			getTodos()
+		});
+
+		return {
+			filter,
+			todos,
+			loading,
+			filterItems,
+			filteredTodos
+		}
 	}
 };
 </script>

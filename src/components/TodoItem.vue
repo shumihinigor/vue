@@ -8,7 +8,7 @@
 				@change="todo.completed = !todo.completed"
 			>
 			<label :for="todo.id">
-				<strong>{{ index }}</strong>
+				<strong>{{ index + 1 }}</strong>
 				{{ capitalFirstLetter(todo.title) }}
 			</label>
 		</span>
@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
-const { mapActions } = createNamespacedHelpers('todos');
+import { toRefs } from 'vue'
+import { useStore } from 'vuex';
 
 export default {
 	name: "TodoItem",
@@ -32,12 +32,22 @@ export default {
 			default: () => 0
 		}
 	},
-	methods: {
-		...mapActions([
-			'deleteTodo'
-		]),
-		capitalFirstLetter(value) {
-			return value[0].toUpperCase() + value.slice(1, value.length)
+	setup(props) {
+		const store = useStore()
+
+		const { todo, index } = toRefs(props)
+
+		// access an action
+		const deleteTodo = () => store.dispatch('todos/deleteTodo', index.value)
+
+		// methods
+		const capitalFirstLetter = (value) => value[0].toUpperCase() + value.slice(1, value.length)
+
+		return {
+			todo,
+			index,
+			deleteTodo,
+			capitalFirstLetter
 		}
 	}
 }

@@ -1,36 +1,36 @@
 <template>
 	<form @submit.prevent="submit">
-		<input v-model="localTitle" type="text">
-		<button :disabled="!localTitle" type="submit">Create</button>
+		<input v-model="title" type="text">
+		<button :disabled="!title" type="submit">Create</button>
 	</form>
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
-const { mapState, mapActions, mapMutations } = createNamespacedHelpers('todos');
+import { useStore } from 'vuex';
+import { computed } from "vue";
 
 export default {
 	name: "AddTodo",
-	computed: {
-		...mapState([
-			'title'
-		]),
-		localTitle: {
-			get() {
-				return this.title;
-			},
-			set(title) {
-				this.setTitle(title);
-			}
-		}
-	},
-	methods: {
-		...mapActions([
-			'submit'
-		]),
-		...mapMutations([
-			'setTitle'
-		]),
+	setup() {
+		const store = useStore()
+
+		// access a state in computed function
+		const title = computed({
+			get: () => store.getters['todos/title'],
+			set: title => setTitle(title)
+		});
+
+
+		// access a getter in computed function
+		// ...
+
+		// access a mutation
+		const setTitle = (title) => store.commit('todos/setTitle', title);
+
+		// access an action
+		const submit = () => store.dispatch('todos/submit');
+
+		return { title, submit }
 	}
 }
 </script>

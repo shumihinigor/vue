@@ -19,7 +19,7 @@ const state = () => ({
 	],
 	loadingMore: false,
 	loading: true,
-	filter: '',
+	filter: 'all',
 	todos: [],
 	title: '',
 	limit: 0
@@ -28,6 +28,7 @@ const state = () => ({
 // getters
 const getters = {
 	todos(state) { return state.todos },
+	title(state) { return state.title },
 	filter(state) { return state.filter },
 	loading(state) { return state.loading },
 	loadingMore(state) { return state.loadingMore },

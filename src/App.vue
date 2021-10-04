@@ -33,9 +33,5 @@
 }
 </style>
 <script>
-export default {
-  components: {
-  
-  }
-}
+export default {}
 </script>

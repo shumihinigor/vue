@@ -4,7 +4,7 @@
 			<TodoItem
 			v-for="(todo, idx) in filteredTodos"
 			:todo="todo"
-			:index="idx + 1"
+			:index="idx"
 			:key="todo.id"
 			/>
 		</ul>
@@ -21,27 +21,31 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
-const { mapGetters, mapActions } = createNamespacedHelpers('todos');
+import { computed } from 'vue'
+import { useStore } from 'vuex';
 
 import TodoItem from '@/components/TodoItem';
 
 export default {
 	name: "TodoList",
-	computed: {
-		...mapGetters([
-			'filteredTodos',
-			'loadingMore',
-			'disabledButton'
-		])
-	},
-	methods: {
-		...mapActions([
-			'getTodos'
-		])
-	},
-	components: {
-		TodoItem
+	components: { TodoItem },
+	setup() {
+		const store = useStore()
+
+		// access a getter in computed function
+		const filteredTodos = computed(() => store.getters['todos/filteredTodos']);
+		const loadingMore = computed(() => store.getters['todos/loadingMore']);
+		const disabledButton = computed(() => store.getters['todos/disabledButton']);
+
+		// access an action
+		const getTodos = () => store.dispatch('todos/getTodos')
+
+		return {
+			filteredTodos,
+			loadingMore,
+			disabledButton,
+			getTodos
+		}
 	}
 }
 </script>
