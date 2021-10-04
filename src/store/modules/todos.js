@@ -19,7 +19,7 @@ const state = () => ({
 	],
 	loadingMore: false,
 	loading: true,
-	filter: '',
+	filter: 'all',
 	todos: [],
 	title: '',
 	limit: 0

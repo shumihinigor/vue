@@ -1,7 +1,7 @@
 <template>
 	<form @submit.prevent="submit">
 		<input v-model="localTitle" type="text">
-		<button type="submit">Create</button>
+		<button :disabled="!localTitle" type="submit">Create</button>
 	</form>
 </template>
 
@@ -62,5 +62,8 @@ export default {
 		transition: all .2s;
 		cursor: pointer;
 		border-radius: 5px;
+	}
+	form button:disabled {
+		background: gray;
 	}
 </style>
